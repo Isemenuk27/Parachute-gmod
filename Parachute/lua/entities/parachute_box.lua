@@ -32,7 +32,12 @@ function ENT:Use( activator )
 			physObj:Spawn()
 			physObj:SetPos(self:GetPos())
 			physObj:SetAngles(self:GetAngles())
-			physObj:Fire( "Break" )
+			timer.Simple(0.2, function()
+				if IsValid(physObj) then
+					physObj:TakeDamage(100)
+				end
+			end)
+			
 			activator:EmitSound( "npc/combine_soldier/gear6.wav", 60, 100 )
 			self:Remove()
 		else
@@ -53,7 +58,11 @@ function ENT:OnTakeDamage( dmginfo )
 	physObj:Spawn()
 	physObj:SetPos(self:GetPos())
 	physObj:SetAngles(self:GetAngles())
-	physObj:TakeDamage(100)
+	timer.Simple(0.2, function()
+		if IsValid(physObj) then
+			physObj:TakeDamage(100)
+		end
+	end)
 	self:Remove()
 end
 

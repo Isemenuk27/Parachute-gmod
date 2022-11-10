@@ -22,7 +22,7 @@ end
 
 local offset, noattoffset = Vector(0,0,-70), Vector(0,0,-20)
 
-local useatt = CreateConVar("parachute_usechestatt", "1", FCVAR_ARCHIVE)
+local useatt = CreateConVar("parachute_usechestatt", "0", FCVAR_ARCHIVE)
 
 function ENT:Draw()
 	local ply = self:GetOwner()
@@ -52,7 +52,8 @@ end
 
 function ENT:Think( )
 	if CLIENT then return end
-	local owner = self:GetOwner( )
+	local owner = self:GetOwner()
+	if !IsValid(owner) then SafeRemoveEntity( self ) return end
 	self:SetPos(owner:GetPos())
 	if owner.Parachuting then return end
 	SafeRemoveEntity( self )

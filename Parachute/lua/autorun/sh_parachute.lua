@@ -238,10 +238,9 @@ if CLIENT then
 
 	local function Parachute_Common( pnl )
 
-		pnl:ControlHelp( "Parachute Controls" )
-
 		local Default = {
-			["parachute_enabled"] = 0 ,
+			["parachute_enabled"] = 1,
+			["parachute_usechestatt"] = 0,
 			["parachute_volume"] = 0.7 ,
 			["parachute_notify_volume"] = 0.5
 		}
@@ -249,6 +248,8 @@ if CLIENT then
 		pnl:AddControl( "ComboBox" , { ["MenuButton"] = 1 , ["Folder"] = "parachute_common" , ["Options"] = { [ "#preset.default" ] = Default } , ["CVars"] = table.GetKeys( Default ) } )
 
 		pnl:CheckBox( "Parachute Enable" , "parachute_enabled")
+
+		pnl:CheckBox( "Use chest attachment instead of position" , "parachute_usechestatt")
 
 		pnl:NumSlider( "Flight Volume" , "parachute_volume" , 0.2 , 1 , 1 )
 
@@ -264,7 +265,8 @@ if CLIENT then
 	end)
 
 	local function ParachuteShake( ply, pos, angles, fov )
-		local p, y = TimedSin(1, 0, 3, 0), TimedSin(1.2, 0, 6, 0)
+		if LocalPlayer() != GetViewEntity() then return end
+		local p, y = TimedSin(1, 0, 1, 0), TimedSin(1.2, 0, 2, 0)
 		local view = {
 			angles = angles + Angle( p, y, 0 ),
 		}
